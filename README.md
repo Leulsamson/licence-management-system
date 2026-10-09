@@ -46,7 +46,7 @@ AdminPassword: testpass
 - **Backend**: Next.js API Routes
 - **Database**: PostgreSQL with Prisma ORM
 - **Authentication**: JWT (JSON Web Tokens)
-- **Security**: AES encryption for API communication, reCAPTCHA for form protection
+- **Security**: AES encryption for API communication
 - **Charts**: Recharts for data visualization
 
 ## Installation
@@ -86,9 +86,6 @@ JWT_SECRET="your-secure-jwt-secret-key"
 # AES Secret for License Verification API (generate a secure random string)
 AES_SECRET_KEY="your-secure-aes-secret-key"
 
-# Google reCAPTCHA (register at https://www.google.com/recaptcha)
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY="your-recaptcha-site-key"
-RECAPTCHA_SECRET_KEY="your-recaptcha-secret-key"
 ```
 
 4. Run database migrations:
@@ -137,7 +134,6 @@ The system includes a secure API for verifying licenses in your software applica
 
 - All passwords are securely hashed using bcrypt
 - JWT tokens are used for authentication and have an 8-hour expiration
-- reCAPTCHA protection is implemented on all login forms
 - License verification API uses AES encryption for all communication
 - Hardware binding adds an additional layer of protection against unauthorized license sharing
 

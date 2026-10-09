@@ -10,7 +10,6 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { ShieldCheck, Loader2 } from 'lucide-react';
-import ReCAPTCHA from 'react-google-recaptcha';
 import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
@@ -24,7 +23,6 @@ export default function AdminLogin() {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -35,15 +33,6 @@ export default function AdminLogin() {
   });
   
   const onSubmit = async (data: FormValues) => {
-    if (!recaptchaToken) {
-      toast({
-        title: 'reCAPTCHA Required',
-        description: 'Please complete the reCAPTCHA verification',
-        variant: 'destructive',
-      });
-      return;
-    }
-    
     setIsLoading(true);
     
     try {
@@ -52,10 +41,7 @@ export default function AdminLogin() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...data,
-          recaptchaToken,
-        }),
+        body: JSON.stringify(data),
       });
       
       const result = await response.json();
@@ -128,13 +114,6 @@ export default function AdminLogin() {
                   </FormItem>
                 )}
               />
-              
-              <div className="pt-2 pb-4 flex justify-center">
-                <ReCAPTCHA
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'}
-                  onChange={setRecaptchaToken}
-                />
-              </div>
               
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? (

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { isValidRecaptcha } from '@/lib/utils';
 import { signJWT } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
@@ -9,20 +8,7 @@ import prisma from '@/lib/prisma';
 
 export async function POST(req: NextRequest) {
   try {
-    const { username, password, recaptchaToken } = await req.json();
-
-    // Validate reCAPTCHA
-    const recaptchaValid = await isValidRecaptcha(
-      recaptchaToken,
-      process.env.RECAPTCHA_SECRET_KEY || ''
-    );
-
-    if (!recaptchaValid) {
-      return NextResponse.json(
-        { error: 'reCAPTCHA verification failed' },
-        { status: 400 }
-      );
-    }
+    const { username, password } = await req.json();
 
     // Check if admin exists
     const admin = await prisma.admin.findUnique({

@@ -23,27 +23,3 @@ export function generateLicenseKey(): string {
   }
   return segments.join('-');
 }
-
-export function isValidRecaptcha(
-  recaptchaToken: string | null | undefined, 
-  secretKey: string
-): Promise<boolean> {
-  if (!recaptchaToken) return Promise.resolve(false);
-
-  const verificationUrl = 'https://www.google.com/recaptcha/api/siteverify';
-  const params = new URLSearchParams({
-    secret: secretKey,
-    response: recaptchaToken,
-  });
-
-  return fetch(`${verificationUrl}?${params.toString()}`, {
-    method: 'POST',
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      return data.success === true;
-    })
-    .catch(() => {
-      return false;
-    });
-}

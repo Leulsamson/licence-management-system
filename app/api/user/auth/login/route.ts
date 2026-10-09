@@ -1,24 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { isValidRecaptcha } from '@/lib/utils';
 import { signJWT } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
 export async function POST(req: NextRequest) {
   try {
-    const { userHash, recaptchaToken } = await req.json();
-
-    // Validate reCAPTCHA
-    const recaptchaValid = await isValidRecaptcha(
-      recaptchaToken,
-      process.env.RECAPTCHA_SECRET_KEY || ''
-    );
-
-    if (!recaptchaValid) {
-      return NextResponse.json(
-        { error: 'reCAPTCHA verification failed' },
-        { status: 400 }
-      );
-    }
+    const { userHash } = await req.json();
 
     // Check if user exists
     const user = await prisma.user.findUnique({
