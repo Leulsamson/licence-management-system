@@ -73,9 +73,9 @@ export default function Home() {
   <p>
     © {new Date().getFullYear()} License Management System. All rights reserved.
     <br />
-    Developed by <span className="font-semibold">Jawad</span> &nbsp;|&nbsp;
+    License Management System &nbsp;|&nbsp;
     <a
-      href="https://github.com/killcod3"
+      href="https://github.com/Leulsamson/licence-management-system"
       className="underline hover:text-blue-600"
       target="_blank"
       rel="noopener noreferrer"
