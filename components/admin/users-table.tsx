@@ -45,7 +45,10 @@ export default function UsersTable() {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/admin/users');
+      const response = await fetch('/api/admin/users', {
+        credentials: 'include',
+        cache: 'no-store',
+      });
       const data = await response.json();
       
       if (response.ok) {
@@ -89,6 +92,8 @@ export default function UsersTable() {
     try {
       const response = await fetch(`/api/admin/users/${userToDelete.id}`, {
         method: 'DELETE',
+        credentials: 'include',
+        cache: 'no-store',
       });
       
       const data = await response.json();

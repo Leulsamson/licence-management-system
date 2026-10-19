@@ -44,6 +44,8 @@ export default function CreateUserDialog({
     try {
       const response = await fetch('/api/admin/users', {
         method: 'POST',
+        credentials: 'include',
+        cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
         },
