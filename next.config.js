@@ -6,6 +6,9 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: { unoptimized: true },
+  outputFileTracingIncludes: {
+    '/*': ['./node_modules/.prisma/client/**'],
+  },
 };
 
 module.exports = nextConfig;
